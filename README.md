@@ -38,17 +38,39 @@ Dev_of_DL_system/
 ## Как запустить проект
 
 ```bash
-# 1. Скопируете репозиторий 
+# 1. Запустите docker
+на Linux: sudo systemctl start docker, на macOS/Windows: откройте Docker Desktop
+
+# 2. Скопируете репозиторий 
 git clone https://github.com/Not-broken-today/Dev_of_DL_system.git
 
-# 2 Перейдите в папку
+# 3 Перейдите в папку
 cd Dev_of_DL_system
 
-# 3. Соберите образ
+# 4. Соберите образ
 docker build -t darkir-eval .
 
-# 4. Запустите контейнер
-docker run --rm  darkir-eval
+# 5. Запустите контейнер
+## Для Linux / macOS:
+docker run --rm \
+  -v "$(pwd)/assets":/app/assets \
+  -v "$(pwd)/models":/app/models \
+  -v "$(pwd)/evaluation_report.csv":/app/evaluation_report.csv \
+  darkir-eval
+
+## Для Windows (PowerShell):
+docker run --rm `
+  -v "${PWD}/assets":/app/assets `
+  -v "${PWD}/models":/app/models `
+  -v "${PWD}/evaluation_report.csv":/app/evaluation_report.csv `
+  darkir-eval
+
+## Для Windows (CMD):
+docker run --rm ^
+  -v "%cd%/assets":/app/assets ^
+  -v "%cd%/models":/app/models ^
+  -v "%cd%/evaluation_report.csv":/app/evaluation_report.csv ^
+  darkir-eval
 ```
 
 > Docker-образ основан на `python:3.10-slim`, автоматически клонирует оригинальный репозиторий DarkIR и настраивает `PYTHONPATH` для корректного импорта.
