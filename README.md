@@ -51,7 +51,14 @@ cd Dev_of_DL_system
 docker build -t darkir-eval .
 
 # 5. Запустите контейнер
+## Для Linux / macOS:
 docker run --rm -v "$(pwd)/assets":/app/assets -v "$(pwd)/models":/app/models -v "$(pwd)/evaluation_report.csv":/app/evaluation_report.csv darkir-eval
+
+## Для Windows (PowerShell):
+docker run --rm -v "${PWD}/assets":/app/assets -v "${PWD}/models":/app/models -v "${PWD}/evaluation_report.csv":/app/evaluation_report.csv darkir-eval
+
+## Для Windows (CMD):
+docker run --rm -v "%cd%/assets":/app/assets -v "%cd%/models":/app/models -v "%cd%/evaluation_report.csv":/app/evaluation_report.csv darkir-eval
 ```
 
 > Docker-образ основан на `python:3.10-slim`, автоматически клонирует оригинальный репозиторий DarkIR и настраивает `PYTHONPATH` для корректного импорта.
